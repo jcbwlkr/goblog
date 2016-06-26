@@ -24,6 +24,9 @@ var db []Post
 func main() {
 	fmt.Println("Hello, world")
 
+	// Ensure db is an empty slice, not nil
+	db = []Post{}
+
 	r := pat.New()
 
 	r.Get("/hello", hello)
