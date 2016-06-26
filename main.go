@@ -25,7 +25,7 @@ func main() {
 	}
 
 	fmt.Println("Listening on localhost:" + port)
-	http.ListenAndServe(":"+port, r) // Changed "nil" to "r"
+	http.ListenAndServe(":"+port, r)
 }
 
 func hello(w http.ResponseWriter, r *http.Request) {
