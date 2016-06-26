@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strconv"
 	"time"
 
 	"github.com/gorilla/pat"
@@ -30,6 +31,7 @@ func main() {
 
 	r.Post("/posts", addPost)
 	r.Get("/posts", getPosts)
+	r.Delete("/posts/{id}", delPost)
 
 	r.Router.PathPrefix("/").Handler(http.FileServer(http.Dir("public")))
 
@@ -85,4 +87,28 @@ func getPosts(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
+}
+
+// delPost removes a post
+func delPost(w http.ResponseWriter, r *http.Request) {
+
+	// Figure out which post they want to delete
+	idStr := r.URL.Query().Get(":id")
+
+	// Convert their input to an int
+	id, err := strconv.Atoi(idStr)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	// Make sure it's a Post that exists
+	if id < 0 || id >= len(db) {
+		http.Error(w, err.Error(), http.StatusNotFound)
+		return
+	}
+
+	db = append(db[:id], db[id+1:]...)
+
+	w.WriteHeader(http.StatusNoContent)
 }
