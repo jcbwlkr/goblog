@@ -2,8 +2,11 @@ package main
 
 import (
 	"fmt"
+	"io/ioutil"
+	"log"
 	"net/http"
 	"os"
+	"time"
 
 	"github.com/gorilla/pat"
 	"github.com/russross/blackfriday"
@@ -29,6 +32,13 @@ func main() {
 }
 
 func hello(w http.ResponseWriter, r *http.Request) {
+	now := []byte(time.Now().Format(time.StampMicro))
+	if err := ioutil.WriteFile("time", now, os.ModeAppend); err != nil {
+		http.Error(w, "could not write file", http.StatusInternalServerError)
+		log.Print(err)
+		return
+	}
+
 	body := []byte("Hello, world")
 	w.Write(body)
 }
