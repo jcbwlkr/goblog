@@ -1,1 +1,1 @@
-web: goweb
+web: goblog
