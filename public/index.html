@@ -1,28 +1,36 @@
-<doctype html>
+<!doctype html>
 <html>
   <head>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
 
+    <title>Go Blog</title>
   </head>
   <body>
     <div class="container">
       <div class="page-title">
-        <h1>Markdown Generator</h1>
-        <p class="lead">Generate your markdown with Go</p>
+        <h1>Go Blog</h1>
+        <p class="lead">Write a post using Markdown</p>
         <hr />
       </div>
 
-      <form action="/markdown" method="POST">
+      <form action="/markdown" method="POST" id="new-post">
         <div class="form-group">
-          <textarea class="form-control" name="body" cols="30" rows="10"></textarea>
+          <input type="text" class="form-control" name="title" id="title" placeholder="Title" />
+        </div>
+        <div class="form-group">
+          <textarea class="form-control" name="body" id="body" cols="30" rows="10" placeholder="Write your post here."></textarea>
         </div>
 
         <div class="form-group">
           <input type="submit" class="btn btn-primary pull-right" />
         </div>
       </form>
+
+      <div class="clearfix"></div>
+
+      <hr />
 
       <div id="post-list">
       </div>

@@ -23,7 +23,7 @@ func main() {
 	r.Delete("/posts/{id}", delPost)
 
 	// Serve static content from the public directory directly
-	r.Router.PathPrefix("/").Handler(http.FileServer(http.Dir("public")))
+	r.PathPrefix("/").Handler(http.FileServer(http.Dir("public")))
 
 	// Figure out the port we should bind to. For local development it
 	// will default to 8080 but on Heroku the PORT environment variabl
