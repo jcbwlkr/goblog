@@ -15,8 +15,23 @@ import (
 
 // Post is a blog post
 type Post struct {
-	Body string    `json:"body"`
+	Body Markdown  `json:"body"`
 	Time time.Time `json:"time"`
+}
+
+// Markdown extends string with extra Marshalling behavior.
+type Markdown string
+
+// MarshalJSON will turn a Markdown string into HTML for representation in an API.
+func (m Markdown) MarshalJSON() ([]byte, error) {
+	mkd := blackfriday.MarkdownCommon([]byte(m))
+
+	js, err := json.Marshal(string(mkd))
+	if err != nil {
+		return nil, err
+	}
+
+	return js, nil
 }
 
 var db []Post
