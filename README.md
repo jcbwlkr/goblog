@@ -103,7 +103,29 @@ heroku ps:scale web=1
 
 ## Ideas For Improvement
 
+### Persistence
+
 Note that the "database" in this application is just an in-memory slice. Every
-time you restart the application it forgets all of your blog posts. To change
-this look into using the [database/sql](https://golang.org/pkg/database/sql)
-package.
+time you restart the application (or the heroku dyno goes to sleep) it forgets
+all of your blog posts. To change this look into using the
+[database/sql](https://golang.org/pkg/database/sql) package.
+
+### Middleware
+
+It is common for web applications to have a chain of middleware handlers that
+run before / after your regular handlers. An easy middleware to add would be
+one that logs before and after each request (and includes the total time it
+took). I recommend using
+[github.com/justinas/alice](https://github.com/justinas/alice) for this
+purpose.
+
+### Authentication
+
+Right now any user can delete any post. Require your users to log in with
+GitHub using [github.com/markbates/goth](https://github.com/markbates/goth).
+
+### Cross Site Scripting
+
+Our front end exposes a huge security flaw. When we get the HTML from the user
+we stick it straight into the DOM. Any `<script>` tags will get executed by the
+browser. Research Cross Site Scripting (XSS) and find a way to mitigate this.
