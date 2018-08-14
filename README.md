@@ -72,7 +72,7 @@ This will prompt you for your Heroku email and password.
 Before the first time you deploy this app you must create it on heroku. Ensure
 you are in the `goblog` directory in your terminal then run
 
-````
+```
 heroku create
 ```
 
